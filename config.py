@@ -7,8 +7,8 @@ bluepin='24'
 
 #Location of mailbox. Default for pi-blaster is /dev/pi-blaster.
 #Can change for testing purposes. 
-#mailboxloc='/dev/pi-blaster'
-mailboxloc='test'
+mailboxloc='/dev/pi-blaster'
+#mailboxloc='test'
 
 #Parameters for fades. Duration in seconds for sleep between steps and number of steps.
 fadelength=0.01
