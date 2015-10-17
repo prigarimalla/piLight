@@ -1,7 +1,14 @@
 import config, time
 
 class lightSetter(object):
-	def __init__(self, pins=[config.redpin, config.greenpin, config.bluepin], mailbox=config.mailboxloc, fadelength=config.fadelength, fadesteps=config.fadesteps, gammavals=config.gammavals, gamma=config.gamma, colors=config.colors, calibration=[config.redcal, config.greencal, config.bluecal]):
+	def __init__(self, pins=[config.redpin, config.greenpin, config.bluepin], 
+		mailbox=config.mailboxloc, 
+		fadelength=config.fadelength, 
+		fadesteps=config.fadesteps, 
+		gammavals=config.gammavals, 
+		gamma=config.gamma, 
+		colors=config.colors, 
+		calibration=[config.redcal, config.greencal, config.bluecal]):
 		self.pins = pins
 		self.mailbox = mailbox
 		self.curcolor = [0,0,0]
@@ -44,9 +51,13 @@ class lightSetter(object):
 	def _sendData(self, color):
 		with open(self.mailbox, 'a') as m:
 			if self.gamma:
-				m.write(self.pins[0]+'='+str(self.calibration[0]*(self.gammavals[int(color[0])]/255.0))+'\n' + self.pins[1]+'='+str(self.calibration[1]*(self.gammavals[int(color[1])]/255.0))+'\n' + self.pins[2]+'='+str(self.calibration[2]*(self.gammavals[int(color[2])]/255.0))+'\n')
+				m.write(self.pins[0]+'='+str(self.calibration[0]*(self.gammavals[int(color[0])]/255.0))+'\n' + 
+					self.pins[1]+'='+str(self.calibration[1]*(self.gammavals[int(color[1])]/255.0))+'\n' + 
+					self.pins[2]+'='+str(self.calibration[2]*(self.gammavals[int(color[2])]/255.0))+'\n')
 			else:
-				m.write(self.pins[0]+'='+str(self.calibration[0]*(color[0]/255.0))+'\n' + self.pins[1]+'='+str(self.calibration[1]*(color[1]/255.0))+'\n' + self.pins[2]+'='+str(self.calibration[2]*(color[2]/255.0))+'\n')
+				m.write(self.pins[0]+'='+str(self.calibration[0]*(color[0]/255.0))+'\n' + 
+					self.pins[1]+'='+str(self.calibration[1]*(color[1]/255.0))+'\n' + 
+					self.pins[2]+'='+str(self.calibration[2]*(color[2]/255.0))+'\n')
 		self.curcolor = [int(i) for i in color]
 
 if __name__ == '__main__':
