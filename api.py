@@ -20,16 +20,19 @@ def api_setLights_color(color):
 
 @app.route('/')
 def webui():
-  return send_from_directory('webui/index.html')
+  try:
+    return send_from_directory('webui','index.html')
+  except Exception as e:
+    print e
 
 @app.route('/js/sliders.js')
 def webui_slider_js():
-  return send_from_directory('webui/js/sliders.js')
+  return send_from_directory('webui/js','sliders.js')
 
 @app.route('/css/sliders.css')
-def webui_slider_js():
-  return send_from_directory('webui/css/sliders.css')
-  
+def webui_slider_css():
+  return send_from_directory('webui/css','sliders.css')
+
 if __name__ == '__main__':
   app.run(host='0.0.0.0')
 
