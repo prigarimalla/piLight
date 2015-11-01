@@ -1,0 +1,107 @@
+<html>
+	<head>
+		<link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+		<link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" media="all" rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.1/modernizr.min.js"></script>
+		<script src="http://192.168.2.115:5000/js/sliders.js"></script>
+		<link href="http://192.168.2.115:5000/css/sliders.css" media="all" rel="stylesheet">
+		<meta content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	</head>
+
+	<body id="body">
+		<div class="row">
+			<div class = "text-center" style="margin-top:20px">
+				<h2>netLight</h2>
+			</div>
+		</div>
+		<div class="row text-center">
+			<div class="btn-group">
+				<button type="button" id="onbtn" class="btn btn-lg" style="margin-top:20px margin-bottom:60px">FULL</button>
+				<button type="button" id="offbtn" class="btn btn-lg" style="margin-top:20px margin-bottom:60px">OFF</button>
+			</div>
+		</div>	
+		<div class="row text-center">
+			<div class="col-xs-8 col-xs-offset-2" style="margin-top:20px">
+				<input class="slider slider-margin" id="dimbar" data-slider-max="255" data-slider-min="0" data-slider-value="100" type="text" style="margin-bottom:20px">
+			</div>
+		</div>
+			<div class="row text-center">
+				<button type="button" id="dimbtn" class="btn btn-lg" style="margin-bottom:60px">DIM WHITE</button>
+			</div>
+		
+		<div class="row">			
+			<div class="col-xs-8 col-xs-offset-2" style="margin-top:20px">
+				<input class="slider" id="redbar" data-slider-max="255" data-slider-min="0" data-slider-value="74" type="text">
+			</div>
+			<div class="col-xs-8 col-xs-offset-2" style="margin-top:20px">
+				<input class="slider" id="greenbar" data-slider-max="255" data-slider-min="0" data-slider-value="213" type="text">
+			</div>
+			<div class="col-xs-8 col-xs-offset-2" style="margin-top:20px">
+				<input class="slider" id="bluebar" data-slider-max="255" data-slider-min="0" data-slider-value="175" type="text">
+			</div>
+			<div>
+				<button type="button" id="setbtn" class="col-xs-4 col-xs-offset-4 btn btn-lg" style="margin-top:20px">SET COLOR</button>
+			</div>
+		</div>
+
+
+
+	</body>
+
+	<script>
+		$(redbar).slider()
+		$(greenbar).slider()
+		$(bluebar).slider()
+		$(dimbar).slider()
+
+		var red = 74
+		var green = 213
+		var blue = 175
+		var dim = 100
+
+		var color = "rgb("+red+","+green+","+blue+")"
+		$("body").css("background-color",color);
+
+		var url = "http://192.168.2.115:5000/setlights/"
+		$(onbtn).click(function(){
+			$.get(url+"255/255/255")
+		})
+
+		$(dimbtn).click(function(){
+			$.get(url+dim+"/"+dim+"/"+dim)
+		})
+
+		$(offbtn).click(function(){
+			$.get(url+"0/0/0")
+		})
+
+		$(setbtn).click(function(){
+			$.get(url+red+"/"+green+"/"+blue)
+		})
+
+		$(redbar).on('slide', function(slideEvt){
+			red = slideEvt.value
+			var color = "rgb("+red+","+green+","+blue+")"
+			$("body").css("background-color",color);
+		})
+
+		$(greenbar).on('slide', function(slideEvt){
+			green = slideEvt.value
+			var color = "rgb("+red+","+green+","+blue+")"
+			$("body").css("background-color",color);
+		})
+
+		$(bluebar).on('slide', function(slideEvt){
+			blue = slideEvt.value
+			var color = "rgb("+red+","+green+","+blue+")"
+			$("body").css("background-color",color);
+		})
+
+		$(dimbar).on('slide', function(slideEvt){
+			dim = slideEvt.value
+		})
+	</script>
+</html>
