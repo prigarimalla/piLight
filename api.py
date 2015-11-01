@@ -1,7 +1,7 @@
-from flask import Flask, url_for, Response
+from flask import Flask, url_for, Response, send_from_directory
 import lightSetter
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 lightEngine = lightSetter.lightSetter()
 
 @app.route('/setlights/<red>/<green>/<blue>')
@@ -18,6 +18,18 @@ def api_setLights_color(color):
   lightEngine.setlights(color)
   return success
 
+@app.route('/')
+def webui():
+  return send_from_directory('webui/index.html')
+
+@app.route('/js/sliders.js')
+def webui_slider_js():
+  return send_from_directory('webui/js/sliders.js')
+
+@app.route('/css/sliders.css')
+def webui_slider_js():
+  return send_from_directory('webui/css/sliders.css')
+  
 if __name__ == '__main__':
   app.run(host='0.0.0.0')
 
