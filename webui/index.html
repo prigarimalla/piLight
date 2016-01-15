@@ -6,8 +6,8 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.1/modernizr.min.js"></script>
-		<script src="http://192.168.2.115:5000/js/sliders.js"></script>
-		<link href="http://192.168.2.115:5000/css/sliders.css" media="all" rel="stylesheet">
+		<script src="js/sliders.js"></script>
+		<link href="css/sliders.css" media="all" rel="stylesheet">
 		<meta content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 	</head>
 
@@ -65,7 +65,7 @@
 		var color = "rgb("+red+","+green+","+blue+")"
 		$("body").css("background-color",color);
 
-		var url = "http://192.168.2.115:5000/setlights/"
+		var url = "setlights/"
 		$(onbtn).click(function(){
 			$.get(url+"255/255/255")
 		})

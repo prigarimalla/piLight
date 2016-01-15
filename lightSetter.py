@@ -1,4 +1,5 @@
-import config, time
+import config.lightConfig as config
+import time
 
 class lightSetter(object):
 	def __init__(self, pins=[config.redpin, config.greenpin, config.bluepin], 

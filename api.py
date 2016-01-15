@@ -4,6 +4,7 @@ import lightSetter
 app = Flask(__name__, static_url_path='')
 lightEngine = lightSetter.lightSetter()
 
+
 @app.route('/setlights/<red>/<green>/<blue>')
 def api_setLights(red, green, blue):
   try:
@@ -16,7 +17,7 @@ def api_setLights(red, green, blue):
 @app.route('/setlights/<color>')
 def api_setLights_color(color):
   lightEngine.setlights(color)
-  return success
+  return 'success'
 
 @app.route('/')
 def webui():
