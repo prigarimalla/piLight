@@ -2,15 +2,15 @@ import config.lightConfig as config
 import time
 
 class lightSetter(object):
-	def __init__(self, pins=[config.redpin, config.greenpin, config.bluepin], 
+	def __init__(self, pins=(config.redpin, config.greenpin, config.bluepin),
 		monopin=config.monopin,
 		mailbox=config.mailboxloc, 
 		fadelength=config.fadelength, 
-		fadesteps=config.fadesteps, 
+		fadesteps=config.fadesteps,
 		gammavals=config.gammavals, 
 		gamma=config.gamma, 
 		colors=config.colors, 
-		calibration=[config.redcal, config.greencal, config.bluecal], 
+		calibration=(config.redcal, config.greencal, config.bluecal),
 		mode=config.mode):
 		self.pins = pins
 		self.monopin = monopin
@@ -49,16 +49,16 @@ class lightSetter(object):
 		if self.mode == 'mono':
 			fadeColor = float(color)
 			delta = (fadeColor - self.curcolor)/self.fadesteps
-			startcolor = self.curcolor
+			startColor = self.curcolor
 			for step in range(1, self.fadesteps+1):
-				self._sendData((delta*step)+startcolor)
+				self._sendData((delta*step)+startColor)
 				time.sleep(self.fadelength)
 		else:
 			fadeColor = [float(v) for v in color]
 			delta = [(f-c)/self.fadesteps for f,c in zip(fadeColor, [float(i) for i in self.curcolor])]
-			startcolor = self.curcolor
+			startColor = self.curcolor
 			for step in range(1, self.fadesteps+1):
-				self._sendData([(d*step)+s for d,s in zip(delta, startcolor)])
+				self._sendData([(d*step)+s for d,s in zip(delta, startColor)])
 				time.sleep(self.fadelength)
 	
 	def _sendData(self, color):
