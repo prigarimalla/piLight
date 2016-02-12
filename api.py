@@ -14,9 +14,9 @@ def api_setLights(red, green, blue):
     return 'failure'
     print e
 
-@app.route('/setlights/<color>')
-def api_setLights_color(color):
-  lightEngine.setlights(color)
+@app.route('/setlights/<mono>')
+def api_setLights_color(mono):
+  lightEngine.setlights(mono)
   return 'success'
 
 @app.route('/')

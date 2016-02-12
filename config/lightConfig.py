@@ -1,6 +1,11 @@
 #Configuration for lightSetter
 
+#RGB or MONO mode
+mode='rgb'
+#mode='mono'
+
 #GPIO pin numbers for leds. 
+monopin='23'
 redpin='23'
 greenpin='18'
 bluepin='24'
