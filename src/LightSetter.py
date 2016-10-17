@@ -1,7 +1,9 @@
-import config.lightConfig as config
 import time
 
-class lightSetter(object):
+import src.lightConfig as config
+
+
+class LightSetter(object):
 	def __init__(self, pins=(config.redpin, config.greenpin, config.bluepin),
 		monopin=config.monopin,
 		mailbox=config.mailboxloc, 
@@ -22,7 +24,7 @@ class lightSetter(object):
 		self.colors = colors
 		self.calibration = calibration
 		self.mode = mode
-		self.curcolor = (0,0,0) if self.mode is True else 0
+		self.curcolor = (0,0,0) if self.mode is 'rgb' else 0
 		self._sendData(self.curcolor)
 
 	def setLights(self, color):
@@ -72,8 +74,8 @@ class lightSetter(object):
 		else:
 			with open(self.mailbox, 'a') as m:
 				if self.gamma:
-					m.write(self.pins[0]+'='+str(self.calibration[0]*(self.gammavals[int(color[0])]/255.0))+'\n' + 
-						self.pins[1]+'='+str(self.calibration[1]*(self.gammavals[int(color[1])]/255.0))+'\n' + 
+					m.write(self.pins[0]+'='+str(self.calibration[0]*(self.gammavals[int(color[0])]/255.0))+'\n' +
+						self.pins[1]+'='+str(self.calibration[1]*(self.gammavals[int(color[1])]/255.0))+'\n' +
 						self.pins[2]+'='+str(self.calibration[2]*(self.gammavals[int(color[2])]/255.0))+'\n')
 				else:
 					m.write(self.pins[0]+'='+str(self.calibration[0]*(color[0]/255.0))+'\n' + 
