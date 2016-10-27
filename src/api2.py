@@ -1,8 +1,10 @@
 from flask import Flask, request, Response
+from flask_cors import CORS
 import httplib, json
 from LightManager import LightManager
 
 app = Flask(__name__, static_url_path='')
+CORS(app)
 manager = LightManager()
 
 def getColor():
