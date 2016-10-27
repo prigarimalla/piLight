@@ -1,14 +1,12 @@
+from zone import Zone
+
 #Configuration for lightSetter
 
-#RGB or MONO mode
-mode='rgb'
-#mode='mono'
-
-#GPIO pin numbers for leds.
-monopin='23'
-redpin='23'
-greenpin='18'
-bluepin='24'
+# Array of zones; the first one listed is the default zone used when no zone is given on a request.
+zones = [
+    Zone('rgb', (23, 18, 24), 'Lights around desk'),
+    Zone('mono', 22, 'Main room lights')
+]
 
 #Location of mailbox. Default for pi-blaster is /dev/pi-blaster.
 #Can change for testing purposes. 
