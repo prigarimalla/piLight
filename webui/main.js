@@ -140,7 +140,7 @@ angular.module('lightApp', ['ngMaterial', 'ngMdIcons', 'ngCookies'])
       )
     }
     else{
-      params = {mono: $scope.mono, zone: $scope.currentZone.zoneNumber}
+      params = {mono: Math.floor($scope.mono*2.55), zone: $scope.currentZone.zoneNumber}
       if(delay != false){
         params.delay = Math.floor($scope.delay*60)
       }
