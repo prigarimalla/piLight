@@ -1,107 +1,197 @@
-<html>
-	<head>
-		<link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-		<link rel="stylesheet" media="all" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-		<link href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" media="all" rel="stylesheet">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.1/modernizr.min.js"></script>
-		<script src="js/sliders.js"></script>
-		<link href="css/sliders.css" media="all" rel="stylesheet">
-		<meta content="width=device-width initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-	</head>
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+  <link rel="stylesheet" type="text/css" href="index.css">
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-cookies.min.js"></script>
 
-	<body id="body">
-		<div class="row">
-			<div class = "text-center" style="margin-top:20px">
-				<h2>netLight</h2>
-			</div>
-		</div>
-		<div class="row text-center">
-			<div class="btn-group">
-				<button type="button" id="onbtn" class="btn btn-lg" style="margin-top:20px margin-bottom:60px">FULL</button>
-				<button type="button" id="offbtn" class="btn btn-lg" style="margin-top:20px margin-bottom:60px">OFF</button>
-			</div>
-		</div>	
-		<div class="row text-center">
-			<div class="col-xs-8 col-xs-offset-2" style="margin-top:20px">
-				<input class="slider slider-margin" id="dimbar" data-slider-max="255" data-slider-min="0" data-slider-value="100" type="text" style="margin-bottom:20px">
-			</div>
-		</div>
-			<div class="row text-center">
-				<button type="button" id="dimbtn" class="btn btn-lg" style="margin-bottom:60px">DIM WHITE</button>
-			</div>
-		
-		<div class="row">			
-			<div class="col-xs-8 col-xs-offset-2" style="margin-top:20px">
-				<input class="slider" id="redbar" data-slider-max="255" data-slider-min="0" data-slider-value="74" type="text">
-			</div>
-			<div class="col-xs-8 col-xs-offset-2" style="margin-top:20px">
-				<input class="slider" id="greenbar" data-slider-max="255" data-slider-min="0" data-slider-value="213" type="text">
-			</div>
-			<div class="col-xs-8 col-xs-offset-2" style="margin-top:20px">
-				<input class="slider" id="bluebar" data-slider-max="255" data-slider-min="0" data-slider-value="175" type="text">
-			</div>
-			<div>
-				<button type="button" id="setbtn" class="col-xs-4 col-xs-offset-4 btn btn-lg" style="margin-top:20px">SET COLOR</button>
-			</div>
-		</div>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-material-icons/0.7.1/angular-material-icons.min.js"></script> 
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  <script src="main.js"></script>
+</head>
 
+<body ng-app="lightApp" ng-cloak>
+  <div ng-controller="lightController">
+    <md-toolbar class="md-hue-2">
+      <div class="md-toolbar-tools">
+        <h2>
+          <span>piLight Web Interface</span>
+        </h2>
+        <div ng-if="testMode" hide show-gt-xs>&nbsp;- SERVER NOT FOUND - TEST MODE</div>
+        <span flex=""></span>
 
+        <h5 hide show-gt-xs  ng-if="notLoading">{{currentZone.name}} - {{currentZone.type}}</h5>
+        <md-menu md-position-mode="target-right target">
+          <md-button class="md-icon-button" aria-label="zone-menu" ng-click="$mdOpenMenu($event)">
+            <ng-md-icon icon="menu" style="fill: white"></ng-md-icon>
+          </md-button>
+          <md-menu-content width="4">
+              <md-menu-item ng-repeat="zone in zones | orderBy: '-zoneNumber' : true">
+                <md-button ng-click="updateZone(zone)">{{zone.name}} - {{zone.description}}</md-button>
+              </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+        
+        <md-button class="md-icon-button" aria-label="More" ng-click="showPrerenderedDialog($event)">
+          <ng-md-icon icon="settings" style="fill: white"></ng-md-icon>
+        </md-button>
 
-	</body>
+      </div>
+    </md-toolbar>
 
-	<script>
-		$(redbar).slider()
-		$(greenbar).slider()
-		$(bluebar).slider()
-		$(dimbar).slider()
+    <div style="visibility: hidden">
+      <div class="md-dialog-container" id="myDialog">
+        <md-dialog layout-padding>
+          <div layout-align="center stretch" class="top-button">
+          <h2>Settings</h2>
+          <md-input-container>
+            <label>API URL</label>
+            <input ng-model="baseUrl">
+          </md-input-container>
+          <md-button class="md-fab" aria-label="zone-menu" ng-click="saveBaseUrl()">
+            <md-tooltip ng-if="mq">Save</md-tooltip>
+            <ng-md-icon icon="save" style="fill: white"></ng-md-icon>
+          </md-button>
+        </div>
+        </md-dialog>
+      </div>
+    </div>
 
-		var red = 74
-		var green = 213
-		var blue = 175
-		var dim = 100
+    <div ng-if="!notLoading">
+      <h3 layout="row" layout-align="center center">Loading Zones</h3>
+      <div layout="row" layout-align="center center">
+        <span flex="5"></span>
+        <md-progress-linear flex="" md-mode="indeterminate"></md-progress-linear>
+        <span flex="5"></span>
+      </div>
+    </div>
 
-		var color = "rgb("+red+","+green+","+blue+")"
-		$("body").css("background-color",color);
+    <div ng-if="testMode" hide show-xs layout="row" layout-align="center center" style="margin-top: 20px">&nbsp;SERVER NOT FOUND - TEST MODE</div>
+    <h3 hide show-xs layout="row" layout-align="center center" ng-if="notLoading">{{currentZone.name}} - {{currentZone.type}}</h3>
+    <div ng-if="notLoading">
+      <div layout="row" layout-align="center stretch">
+        <span flex="5"></span>
+        <canvas class="top-slider" flex="5" id="myCanvas"  style="background-color: rgba({{color.red}}, {{color.green}}, {{color.blue}}, 1);" ng-if="currentZone.type == 'RGB'"></canvas>
+        <span flex="5" ng-if="currentZone.type == 'RGB'"></span>
+        <div flex="" layout="column" layout-align="center stretch" ng-if="currentZone.type == 'RGB'">
+          <md-slider-container class="top-slider" >
+            <md-slider flex="" min="0" max="255" ng-model="color.red" aria-label="red" id="red-slider">
+            </md-slider>
+            <md-input-container>
+              <input flex="" type="number" ng-model="color.red" aria-label="red" aria-controls="red-slider">
+            </md-input-container>
+          </md-slider-container>
 
-		var url = "setlights/"
-		$(onbtn).click(function(){
-			$.get(url+"255/255/255")
-		})
+          <md-slider-container>
+            <md-slider flex="" ng-model="color.green" min="0" max="255" aria-label="green" id="green-slider" class="md-accent">
+            </md-slider>
+            <md-input-container>
+              <input flex="" type="number" ng-model="color.green" aria-label="green" aria-controls="green-slider">
+            </md-input-container>
+          </md-slider-container>
 
-		$(dimbtn).click(function(){
-			$.get(url+dim+"/"+dim+"/"+dim)
-		})
+          <md-slider-container>
+            <md-slider flex="" ng-model="color.blue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary">
+            </md-slider>
+            <md-input-container>
+              <input flex="" type="number" ng-model="color.blue" aria-label="blue" aria-controls="blue-slider">
+            </md-input-container>
+          </md-slider-container>
+        </div>
 
-		$(offbtn).click(function(){
-			$.get(url+"0/0/0")
-		})
+         <div flex="" layout="column" layout-align="center stretch" ng-if="currentZone.type == 'MONO'">
+          <md-slider-container class="top-slider">
+            <md-slider flex="" min="0" max="100" ng-model="mono" aria-label="red" id="slider">
+            </md-slider>
+            <md-input-container>
+              <input flex="" type="number" ng-model="mono" aria-label="red" aria-controls="slider">
+            </md-input-container>
+          </md-slider-container>
+        </div>
+       <span flex="5"></span>
+      </div>
 
-		$(setbtn).click(function(){
-			$.get(url+red+"/"+green+"/"+blue)
-		})
+      
 
-		$(redbar).on('slide', function(slideEvt){
-			red = slideEvt.value
-			var color = "rgb("+red+","+green+","+blue+")"
-			$("body").css("background-color",color);
-		})
+      <div id="buttonRow" flex="" layout="row" layout-align="center stretch">
+        <md-button class="md-fab" aria-label="zone-menu" ng-click="offButton()">
+          <md-tooltip ng-if="mq">Off</md-tooltip>
+          <ng-md-icon icon="power_settings_new" style="fill: white"></ng-md-icon>
+        </md-button>
 
-		$(greenbar).on('slide', function(slideEvt){
-			green = slideEvt.value
-			var color = "rgb("+red+","+green+","+blue+")"
-			$("body").css("background-color",color);
-		})
+        <md-fab-speed-dial md-direction="down" class="md-scale" ng-if="currentZone.type == 'RGB'">
+          <md-fab-trigger>
+            <md-button class="md-fab" aria-label="zone-menu">
+              <ng-md-icon icon="color_lens" style="fill: white"></ng-md-icon>
+            </md-button>
+          </md-fab-trigger>
 
-		$(bluebar).on('slide', function(slideEvt){
-			blue = slideEvt.value
-			var color = "rgb("+red+","+green+","+blue+")"
-			$("body").css("background-color",color);
-		})
+          <md-fab-actions>
+          <md-button ng-repeat="color in colors" class="md-fab md-raised md-mini" style="background-color: rgb({{color[0]}}, {{color[1]}}, {{color[2]}});" aria-label="color-choice" ng-click="setColorFromPicker(color)"></md-button>
+          </md-fab-actions>
+        </md-fab-speed-dial>
 
-		$(dimbar).on('slide', function(slideEvt){
-			dim = slideEvt.value
-		})
-	</script>
+        <md-fab-speed-dial md-direction="down" class="md-scale" ng-if="currentZone.type == 'RGB'">
+          <md-fab-trigger>
+            <md-button class="md-fab" aria-label="zone-menu">
+              <ng-md-icon icon="lightbulb_outline" style="fill: white"></ng-md-icon>
+            </md-button>
+          </md-fab-trigger>
+
+          <md-fab-actions>
+          <md-button ng-repeat="intensity in rgbIntensities" class="md-fab md-raised md-mini" aria-label="rgbIntensity-choice" ng-click="setColorFromPicker([intensity[0], intensity[1], intensity[2]])">{{intensity[3]}}</md-button>
+          </md-fab-actions>
+        </md-fab-speed-dial>
+
+        <md-fab-speed-dial md-direction="down" class="md-scale" ng-if="currentZone.type == 'MONO'">
+          <md-fab-trigger>
+            <md-button class="md-fab" aria-label="zone-menu">
+              <ng-md-icon icon="lightbulb_outline" style="fill: white"></ng-md-icon>
+            </md-button>
+          </md-fab-trigger>
+
+          <md-fab-actions>
+          <md-button ng-repeat="intensity in monoIntensities" class="md-fab md-raised md-mini" aria-label="rgbIntensity-choice" ng-click="setMonoFromPicker(intensity[0])">{{intensity[1]}}</md-button>
+          </md-fab-actions>
+        </md-fab-speed-dial>
+        
+        <md-button class="md-fab" aria-label="zone-menu" ng-click="setLights()">
+          <md-tooltip ng-if="mq">Set</md-tooltip>
+          <ng-md-icon icon="done" style="fill: white"></ng-md-icon>
+        </md-button>
+        <md-button class="md-fab" aria-label="zone-menu" ng-click="showPrerenderedScheduleDialog($event)">
+          <md-tooltip ng-if="mq">Schedule</md-tooltip>
+          <ng-md-icon icon="schedule" style="fill: white;"></ng-md-icon>
+        </md-button>
+      </div>
+    </div>
+
+    <div style="visibility: hidden">
+      <div class="md-dialog-container" id="scheduleDialog">
+        <md-dialog layout-padding md-open="delayDialog">
+        <div layout-align="center stretch" class="top-button">
+          <h2>Schedule Lights</h2>
+          <md-input-container>
+            <label>Delay (minutes)</label>
+            <input ng-model="delay">
+          </md-input-container>
+          <md-button class="md-fab" aria-label="zone-menu" ng-click="setLights(true)">
+            <md-tooltip ng-if="mq">Set</md-tooltip>
+            <ng-md-icon icon="done" style="fill: white"></ng-md-icon>
+          </md-button>
+        </div>
+        </md-dialog>
+      </div>
+    </div>
+
+  </div>
+</body>
 </html>

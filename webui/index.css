@@ -1,0 +1,44 @@
+#green-slider .md-thumb:after, #green-slider .md-track-fill{
+    background-color: green !important;
+    border-color: green !important;
+}
+#green-slider .md-focus-thumb, #green-slider .md-focus-ring{
+    background-color: green;
+}
+
+#red-slider .md-thumb:after, #red-slider .md-track-fill{
+    background-color: red !important;
+    border-color: red !important;
+}
+#red-slider .md-focus-thumb, #red-slider .md-focus-ring{
+    background-color: red;
+}
+@media (max-width: 600px){
+	.top-slider{
+		margin-top: 0px;
+	}
+
+	#buttonRow{
+		margin-top: 20px;
+	}
+}
+
+@media (min-width: 601px){
+	.top-slider{
+		margin-top: 20px;
+	}
+
+	#buttonRow{
+		margin-top: 40px;
+	}
+}
+
+
+
+.top-button{
+	margin-top: 20px;
+}
+
+#picker{
+	text-align: center;
+}
