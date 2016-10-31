@@ -1,0 +1,4 @@
+flask
+apscheduler
+flask_cors
+astral
