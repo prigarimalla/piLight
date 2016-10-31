@@ -64,9 +64,9 @@ class LightSetter(object):
         if self.mode == 'mono':
             with open(self.mailbox, 'a') as m:
                 if self.gamma:
-                    m.write(self.pinout+'='+str(self.gammavals[int(color/255.0)]))
+                    m.write(self.pinout+'='+str(self.gammavals[int(color)/255.0])+'\n')
                 else:
-                    m.write(self.pinout+'='+str(int(color/255.0)))
+                    m.write(self.pinout+'='+str(int(color)/255.0)+'\n')
             self.curcolor = int(color)
         else:
             with open(self.mailbox, 'a') as m:
