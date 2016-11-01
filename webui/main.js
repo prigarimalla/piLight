@@ -4,7 +4,8 @@ angular.module('lightApp', ['ngMaterial', 'ngMdIcons', 'ngCookies'])
     $scope.pickerColor = {red: 255, green: 64, blue: 129}
     $scope.color = $scope.pickerColor
     $scope.mono = 50
-    $scope.baseUrl = ($cookies.baseUrl!=null) ? $cookies.baseUrl : "http://localhost:8001"
+    $scope.test = $cookies.get('baseUrl')
+    $scope.baseUrl = ($cookies.get('baseUrl')!=null) ? $cookies.get('baseUrl') : "http://localhost:8001"
     $scope.delay = 60
     $scope.notLoading = false
 
@@ -64,7 +65,7 @@ angular.module('lightApp', ['ngMaterial', 'ngMdIcons', 'ngCookies'])
   }
 
   $scope.saveBaseUrl = function(){
-    $cookies.baseUrl = $scope.baseUrl
+    $cookies.put('baseUrl', $scope.baseUrl)
     $mdToast.show($mdToast.simple().textContent('Settings Updated - Refresh page to reload zones'));
     $mdDialog.hide()
   }

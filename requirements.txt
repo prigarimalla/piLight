@@ -1,4 +1,4 @@
 flask
 apscheduler
-flask_cors
+flask-cors
 astral
