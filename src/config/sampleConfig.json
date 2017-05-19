@@ -1,0 +1,23 @@
+{
+  "mailbox" : "test",
+
+  "zones":[
+    {
+      "description" : "Desk Lights",
+      "mode" : "rgb",
+      "pinout" : ["23","18","24"],
+      "calibration" : [1,1,0.8]
+    },
+    {
+      "description" : "Table Lights",
+      "mode" : "mono",
+      "pinout" : "23",
+      "calibration" : 1
+    }
+  ],
+
+  "fadelength" : 0.01,
+  "fadesteps" : 20,
+  "useGamma" : false,
+  "gamma" : 2.2
+}

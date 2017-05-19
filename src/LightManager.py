@@ -1,11 +1,10 @@
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
-from src.config.LightSetter import LightSetter
 from src.config.lightConfig import zones
 
 class LightManager(object):
     def __init__(self):
-        self.setterZones = [LightSetter(zone.mode, zone.pinout, description=zone.description) for zone in zones]
+        self.setterZones = zones
         self.defaultSetterZone = self.setterZones[0]
         self.scheduler = BackgroundScheduler()
         self.scheduler.start()
